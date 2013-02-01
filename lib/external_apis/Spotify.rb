@@ -18,14 +18,5 @@ module ExternalApis
         t
       end
     end
-
-    def generate_embed_player(track_id)
-      "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:#{track_id}\"" +
-              'width="300"'                                                      +
-              'height="80"'                                                      +
-              'frameborder="0"'                                                  +
-              'allowtransparency="true">'                                        +
-      '</iframe>'
-    end
   end
 end

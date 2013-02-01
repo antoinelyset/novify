@@ -6,6 +6,6 @@ class Track < ActiveRecord::Base
   attr_accessible :spotify_name, :spotify_artist
 
   validates_presence_of   :radio_name, :radio_artist, :playlists
-  validates_uniqueness_of :href
+  validates_uniqueness_of :href, :allow_nil => true
   validates_uniqueness_of :radio_name, :scope => :radio_artist
 end

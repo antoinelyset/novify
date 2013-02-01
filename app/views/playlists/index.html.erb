@@ -1,0 +1,26 @@
+<div class="span12">
+  <% if !@playlists.blank? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Starting Time</th>
+          <th>Ending Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @playlists.each do |playlist|%>
+          <tr>
+            <td><%= playlist.id %></td>
+            <td><%= link_to playlist.name , playlist %></td>
+            <td><%= l playlist.start_time, format: :short %></td>
+            <td><%= l playlist.end_time, format: :short %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    Why U NO Playlist ?
+  <% end %>
+</div>
