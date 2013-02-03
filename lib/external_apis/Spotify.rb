@@ -3,19 +3,32 @@ require 'meta-spotify'
 module ExternalApis
   #TODO : Improve finding algorithm with variation and retry
   class Spotify
+    attr_accessor :tracks
+
     def initialize(tracks = [])
       @tracks = tracks
+      fetch
     end
 
-    def get_href
-      @tracks.map do |t|
-        track            = MetaSpotify::Track.search("#{t.radio_artist} #{t.radio_name}")[:tracks].first
-        if track
-          t.spotify_name   = track.name
-          t.spotify_artist = track.artists.map(&:name).join(' - ')
-          t.href           = track.uri[/\w+\z/]
+  private
+    def fetch
+      threads = []
+      @tracks.each do |t|
+        threads << Thread.new do
+          Thread.current[:spotify_track] = MetaSpotify::Track.search("#{t.formatted_name} #{t.formatted_artist}")[:tracks].first
         end
-        t
+      end
+      threads.each_with_index do |thread, i|
+        thread.join
+        spotify_track = thread[:spotify_track]
+        # TODO : Don't next, relaunch it with just the title,
+        #  then fuzzy match on each artist keep the highest
+        next if spotify_track.nil?
+        @tracks[i].attributes = {
+            spotify_name: spotify_track.name,
+            spotify_artist: spotify_track.artists.map(&:name).join(' - '),
+            href: spotify_track.uri[/\w+\z/]
+          }
       end
     end
   end

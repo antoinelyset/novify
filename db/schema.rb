@@ -11,9 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131184341) do
+ActiveRecord::Schema.define(:version => 20130202212601) do
 
-  create_table "playlists", :force => true do |t|
+  create_table "radios", :force => true do |t|
     t.string   "name"
     t.time     "start_time"
     t.time     "end_time"
@@ -21,19 +21,18 @@ ActiveRecord::Schema.define(:version => 20130131184341) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "playlists_tracks", :id => false, :force => true do |t|
-    t.integer "playlist_id"
-    t.integer "track_id"
-  end
-
   create_table "tracks", :force => true do |t|
+    t.integer  "radio_id"
+    t.time     "played_at"
     t.string   "href"
     t.string   "radio_name"
     t.string   "radio_artist"
     t.string   "spotify_name"
     t.string   "spotify_artist"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "formatted_name"
+    t.string   "formatted_artist"
   end
 
 end

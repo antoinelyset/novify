@@ -1,6 +1,6 @@
-class CreatePlaylists < ActiveRecord::Migration
+class CreateRadios < ActiveRecord::Migration
   def change
-    create_table :playlists do |t|
+    create_table :radios do |t|
       t.string :name
       t.time :start_time
       t.time :end_time

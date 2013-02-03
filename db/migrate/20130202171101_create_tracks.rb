@@ -1,6 +1,8 @@
 class CreateTracks < ActiveRecord::Migration
   def change
     create_table :tracks do |t|
+      t.references :radio
+      t.time   :played_at
       t.string :href
       t.string :radio_name
       t.string :radio_artist

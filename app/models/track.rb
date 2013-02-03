@@ -1,11 +1,20 @@
 class Track < ActiveRecord::Base
-  has_and_belongs_to_many :playlists
+  belongs_to :radio
 
-  attr_accessible :href, :playlists
-  attr_accessible :radio_name,   :radio_artist
-  attr_accessible :spotify_name, :spotify_artist
+  attr_accessible :href, :played_at
+  attr_accessible :radio_name,     :radio_artist
+  attr_accessible :formatted_name, :formatted_artist
+  attr_accessible :spotify_name,   :spotify_artist
 
-  validates_presence_of   :radio_name, :radio_artist, :playlists
-  validates_uniqueness_of :href, :allow_nil => true
-  validates_uniqueness_of :radio_name, :scope => :radio_artist
+  validates_presence_of  :played_at, :radio_name, :radio_artist, :radio
+
+  # Keep only the part before '/' for the artist
+  # Keep only 4 words for the title
+  def reformat_radio_data
+    self.formatted_artist = self.radio_artist.sub(/\/(.+)\z/, '')
+    self.formatted_name   = self.radio_name.
+                                  sub(/( (ft|feat|featuring).+)\z/i, '').
+                                  split(' ')[0..3].join(' ')
+    self
+  end
 end

@@ -1,9 +1,17 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
 one:
-  name: MyString
-  href: MyString
+  played_at: <%= Time.now - 1.day %>
+  radio: nova
+  radio_artist: "The Rolling Stones"
+  radio_name: "Gimme Shelter"
+  spotify_name: "The Rolling Stones"
+  radio_name: "Gimme Shelter"
+  href: "1dv3ePjze9tPq2pk8eWJdR"
 
 two:
-  name: MyString
-  href: MyString
+  played_at: <%= Time.now - 2.day %>
+  radio: nova
+  radio_artist: "Led Zeppelin"
+  radio_name: "Whole Lotta Love"
+  spotify_name: nil
+  radio_name: nil
+  href: nil

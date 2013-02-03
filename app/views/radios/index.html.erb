@@ -1,0 +1,46 @@
+<div class="span12">
+  <% if !@radios.blank? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Starting Time</th>
+          <th>Ending Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @radios.each do |playlist|%>
+          <tr>
+            <td><%= playlist.id %></td>
+            <td><%= link_to playlist.name , playlist %></td>
+            <td>
+               <% if playlist.start_time %>
+                 <%= l playlist.start_time, format: :short %>
+               <% else %>
+                 No Start Time
+               <% end %>
+             </td>
+            <td>
+              <% if playlist.end_time %>
+                <%= l playlist.end_time, format: :short %>
+              <% else %>
+                No End Time
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    Why U NO Playlist ?
+  <% end %>
+
+  <%= form_for(Radio.new, :html => {:class => 'datepair'}) do %>
+    <%= label_tag(:date, "Select a Date:") %>
+    <%= text_field_tag(:date, nil, :class => "date start") %>
+    <%= label_tag(:time, "Select a Time:") %>
+    <%= text_field_tag(:time, nil, :class => "time start") %>
+    <%= submit_tag("Search", :class => "btn") %>
+  <% end %>
+</div>

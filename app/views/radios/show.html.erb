@@ -1,0 +1,26 @@
+<div class="span9 offset2">
+  <% if !@radio.tracks.blank? %>
+    <ol class="tracks">
+      <% @radio.tracks.each do |track|%>
+        <li class="track">
+          <div class="played-at">
+            Played : <%="#{track.radio_name} - #{track.radio_artist}" %>
+            <em> <%= l track.played_at, :format => :short %> </em>
+          </div>
+          <div class="player">
+            <% if !track.href.blank? %>
+              <%= raw generate_embed_player(track)%>
+            <% else %>
+              <%= "#{track.radio_name} - #{track.radio_artist} (Not Found)" %>
+            <% end %>
+            <strong class="more-infos">
+              +
+            </strong>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+  <% else %>
+    Why U NO TRACKS ?
+  <% end %>
+</div>
