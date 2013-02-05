@@ -1,5 +1,7 @@
-class RadiosController < ApplicationController
+require 'external_apis/nova'
+require 'external_apis/spotify'
 
+class RadiosController < ApplicationController
   def index
     @radios = Radio.all
   end
