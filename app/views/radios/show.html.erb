@@ -1,7 +1,12 @@
 <div class="span9 offset2">
   <% if !@radio.tracks.blank? %>
-      <%= raw generate_embed_player(@radio.tracks)%>
-    </ol>
+      <%= raw tracks_player(@radio.tracks)%>
+
+      <ul class="tracks">
+        <% @radio.tracks.each do |track|%>
+          <li class="track"><%= raw track_player(track)%></li>
+        <% end %>
+      </ul>
   <% else %>
     Why U NO TRACKS ?
   <% end %>

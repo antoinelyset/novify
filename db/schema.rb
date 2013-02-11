@@ -15,15 +15,15 @@ ActiveRecord::Schema.define(:version => 20130202212601) do
 
   create_table "radios", :force => true do |t|
     t.string   "name"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "started_at"
+    t.datetime "ended_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "tracks", :force => true do |t|
     t.integer  "radio_id"
-    t.time     "played_at"
+    t.datetime "played_at"
     t.string   "href"
     t.string   "radio_name"
     t.string   "radio_artist"

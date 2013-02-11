@@ -1,9 +1,9 @@
 class CreateRadios < ActiveRecord::Migration
   def change
     create_table :radios do |t|
-      t.string :name
-      t.time :start_time
-      t.time :end_time
+      t.string   :name
+      t.datetime :started_at
+      t.datetime :ended_at
 
       t.timestamps
     end

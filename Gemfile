@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 
 group :test, :development do
+  gem 'pry'
   gem 'foreman'
   gem 'sqlite3'
 end

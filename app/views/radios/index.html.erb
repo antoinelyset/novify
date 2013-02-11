@@ -15,15 +15,15 @@
             <td><%= playlist.id %></td>
             <td><%= link_to playlist.name , playlist %></td>
             <td>
-               <% if playlist.start_time %>
-                 <%= l playlist.start_time, format: :short %>
+               <% if playlist.started_at %>
+                 <%= l playlist.started_at, format: :short %>
                <% else %>
                  No Start Time
                <% end %>
              </td>
             <td>
-              <% if playlist.end_time %>
-                <%= l playlist.end_time, format: :short %>
+              <% if playlist.ended_at %>
+                <%= l playlist.ended_at, format: :short %>
               <% else %>
                 No End Time
               <% end %>

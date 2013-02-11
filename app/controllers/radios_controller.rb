@@ -19,11 +19,12 @@ class RadiosController < ApplicationController
     tracks = ExternalApis::Spotify.new(ExternalApis::Nova.new(complete_time.to_i).tracks).tracks
 
     @radio = Radio.new(name: "Nova : #{complete_time}")
+    @radio.tracks = tracks
     tracks.each do |t|
       t.radio = @radio
       t.save
     end
 
-    render :show
+    redirect_to @radio
   end
 end
