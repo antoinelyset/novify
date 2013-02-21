@@ -7,11 +7,11 @@ module ExternalApis
 
     def initialize(tracks = [])
       @tracks = tracks
-      fetch
+      fetch_tracks
     end
 
   private
-    def fetch
+    def fetch_tracks
       threads = []
       @tracks.each do |t|
         threads << Thread.new do
@@ -25,16 +25,19 @@ module ExternalApis
     def extract_tracks(threads)
       threads.each_with_index do |thread, i|
         thread.join
-        spotify_track = thread[:spotify_track]
         # TODO : Don't next, relaunch it with just the title,
         #   fuzzy match on each artist, then keep the highest
-        next if spotify_track.nil?
-        @tracks[i].attributes = {
-            spotify_name: spotify_track.name,
-            spotify_artist: spotify_track.artists.map(&:name).join(' - '),
-            href: spotify_track.uri[/\w+\z/]
-          }
+        next if thread[:spotify_track].nil?
+        @tracks[i].attributes = extract_track(thread[:spotify_track])
       end
+    end
+
+    def extract_track(spotify_track)
+      {
+        spotify_name: spotify_track.name,
+        spotify_artist: spotify_track.artists.map(&:name).join(' - '),
+        href: spotify_track.uri[/\w+\z/]
+      }
     end
   end
 end

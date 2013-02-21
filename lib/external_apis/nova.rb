@@ -13,16 +13,25 @@ module ExternalApis
 
     #Return 20 which are around the timestamp
     def fetch
-      doc = Nokogiri::HTML(open("http://www.novaplanet.com/radionova/cetaitquoicetitre/#{@timestamp}"))
-      doc.xpath('//h2[@class="artiste"]').map do |t|
-        track = Track.new(
-                  radio_artist: t.content.squish,
-                  radio_name: t.parent.children[3].content.squish,
-                  played_at: Time.at(t.parent.parent['class'][/timestamp_(\d+)/,1].to_i)
-                )
-        track.reformat_radio_data
+      html_tracks.map do |t|
+        track = extract_track(t)
         @tracks << track
       end
+    end
+
+  private
+    def html_tracks
+      doc = Nokogiri::HTML(open("http://www.novaplanet.com/radionova/cetaitquoicetitre/#{@timestamp}"))
+      doc.xpath('//h2[@class="artiste"]')
+    end
+
+    def extract_track(html_track)
+      track = Track.new(
+                radio_artist: t.content.squish,
+                radio_name: t.parent.children[3].content.squish,
+                played_at: Time.at(t.parent.parent['class'][/timestamp_(\d+)/,1].to_i)
+      )
+      track.reformat_radio_data
     end
   end
 end
