@@ -1,43 +1,52 @@
-require 'meta-spotify'
-
 module ExternalApis
-  #TODO : Improve finding algorithm with variation and retry
-  class Spotify
-    attr_accessor :tracks
+  module Spotify
 
-    def initialize(tracks = [])
-      @tracks = tracks
-      fetch_tracks
+    def self.fetch(name = '', artist = '')
+      spotify_track = get_track(name, artist)
+      yield(*spotify_track.to_a) if block_given?
+      spotify_track
     end
 
-  private
-    def fetch_tracks
-      threads = []
-      @tracks.each do |t|
-        threads << Thread.new do
-          Thread.current[:spotify_track] = MetaSpotify::Track.search("#{t.formatted_name} #{t.formatted_artist}")[:tracks].first
+    def self.get_track(name, artist)
+      search       = "#{name} #{artist}"
+      spotify_data = MetaSpotify::Track.search(search)[:tracks].first
+      Track.new(spotify_data)
+    end
+
+    class Track
+      attr_reader :name, :artist, :href
+      def initialize(name = nil, artist = nil, href = nil)
+        #Coercion
+        if name.is_a?(Hash)
+          @name, @artist, @href = name.values_at(:name, :artist, :href)
+        elsif name.is_a?(MetaSpotify::Track)
+          @name, @artist, @href = from_gem(name)
+        else
+          @name, @artist, @href = name, artist, href
         end
       end
-      extract_tracks(threads)
-      @tracks
-    end
 
-    def extract_tracks(threads)
-      threads.each_with_index do |thread, i|
-        thread.join
-        # TODO : Don't next, relaunch it with just the title,
-        #   fuzzy match on each artist, then keep the highest
-        next if thread[:spotify_track].nil?
-        @tracks[i].attributes = extract_track(thread[:spotify_track])
+      def to_h
+        {name: name, artist: artist, href: href}
       end
-    end
 
-    def extract_track(spotify_track)
-      {
-        spotify_name: spotify_track.name,
-        spotify_artist: spotify_track.artists.map(&:name).join(' - '),
-        href: spotify_track.uri[/\w+\z/]
-      }
+      def to_a
+        [name, artist, href]
+      end
+
+      def exist?
+        return name && artist && href
+      end
+      alias_method :exists?, :exist?
+
+    private
+      def from_gem(spotify_data)
+        [
+          spotify_data.name,
+          spotify_data.artists.map(&:name).join(' - '),
+          spotify_data.uri[/\w+\z/]
+        ]
+      end
     end
   end
 end
