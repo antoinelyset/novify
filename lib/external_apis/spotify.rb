@@ -1,13 +1,13 @@
 module ExternalApis
   module Spotify
 
-    def self.fetch(name = '', artist = '')
+    def fetch(name = '', artist = '')
       spotify_track = get_track(name, artist)
       yield(*spotify_track.to_a) if block_given?
       spotify_track
     end
 
-    def self.get_track(name, artist)
+    def get_track(name, artist)
       search       = "#{name} #{artist}"
       spotify_data = MetaSpotify::Track.search(search)[:tracks].first
       Track.new(spotify_data)
