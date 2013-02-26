@@ -1,13 +1,29 @@
 module ExternalApis
   module Spotify
 
-    def fetch(name = '', artist = '')
+    def self.multiple_fetch(tracks)
+      threads = []
+      threads = tracks.map { |t| threaded_fetch(t.radio_name, t.radio_artist) }.each(&:join)
+      threads.each_with_index do |th, i|
+        track = tracks[i]
+        track.spotify_name, track.spotify_artist, track.href = th[:spotify_track].to_a
+      end
+      tracks
+    end
+
+    def self.threaded_fetch(name = '', artist = '')
+      Thread.new do
+        Thread.current[:spotify_track] = fetch(name, artist)
+      end
+    end
+
+    def self.fetch(name = '', artist = '')
       spotify_track = get_track(name, artist)
       yield(*spotify_track.to_a) if block_given?
       spotify_track
     end
 
-    def get_track(name, artist)
+    def self.get_track(name, artist)
       search       = "#{name} #{artist}"
       spotify_data = MetaSpotify::Track.search(search)[:tracks].first
       Track.new(spotify_data)

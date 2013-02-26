@@ -29,21 +29,32 @@ module ExternalApis
     end
 
     def track(html_track)
-      Track.new(radio_artist: radio_artist(html_track),
-                radio_name:   radio_name(html_track),
+      radio_name   = radio_name(html_track)
+      radio_artist = radio_artist(html_track)
+      Track.new(radio_artist: radio_artist,
+                radio_name:   radio_name,
+                formatted_name: formatted_name(radio_name),
+                formatted_artist: formatted_artist(radio_artist),
                 played_at:    played_at(html_track))
     end
 
     # Keep only 4 words (removing the featurings)
     def radio_name(html_track)
-      html_track.parent.children[3].content.squish.
-                                    sub(/( (ft|feat|featuring).+)\z/i, '').
-                                    split(' ')[0..3].join(' ')
+      html_track.parent.children[3].content.squish
+    end
+
+    def formatted_name(radio_name)
+      radio_name.sub(/( (ft|feat|featuring).+)\z/i, '').
+                              split(' ')[0..3].join(' ')
+    end
+
+    def formatted_artist(radio_artist)
+      radio_artist.sub(/\/(.+)\z/, '')
     end
 
     # Keep only the part before '/'
     def radio_artist(html_track)
-      html_track.content.squish.sub(/\/(.+)\z/, '')
+      html_track.content.squish
     end
 
     def played_at(html_track)

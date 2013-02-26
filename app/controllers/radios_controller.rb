@@ -13,14 +13,13 @@ class RadiosController < ApplicationController
 
   def create
     timestamp     = calculate_timestamp(params)
-    @radio.tracks = request_tracks(timestamp)
     @radio = Radio.new(name: "Nova : #{Time.at(timestamp)}")
-    #refactor @radio.tracks = tracks
-    tracks.each do |t|
+    @radio.tracks = request_tracks(timestamp)
+    @radio.tracks.each do |t|
       t.radio = @radio
       t.save
     end
-
+    @radio.save
     redirect_to @radio
   end
 
@@ -33,7 +32,7 @@ private
   end
 
   def request_tracks(timestamp)
-    nova_tracks = ExternalApis::Nova.new(timestamp).tracks
-    ExternalApis::Spotify.new(nova_tracks).tracks
+    nova_tracks = ExternalApis::Nova.fetch(timestamp)
+    ExternalApis::Spotify.multiple_fetch(nova_tracks)
   end
 end
