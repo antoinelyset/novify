@@ -1,8 +1,10 @@
 ## Top
 
- ☐  fix time issues
+ ✔ fix time issues @done (13-02-26 22:55)
 
 ## Bot
+ ☐ JSON API
+ ☐ find_or_create on track by spotify href ?
  ☐ user signin for language setting/daily nova (playlist by mail)
  ☐  COMMENNNNTS
  ☐ mailer
