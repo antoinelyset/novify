@@ -11,14 +11,30 @@ class TrackTest < ActiveSupport::TestCase
   end
 
   def test_without_spotify_data
-    assert tracks(:two).valid?
+    track_without_spotify = FactoryGirl.create(:track,  spotify_artist: nil,
+                                                        spotify_name: nil,
+                                                        href: nil)
+    assert track_without_spotify.valid?
   end
 
-  def test_valid_one
-    assert tracks(:one).valid?
+  def test_valid_track_with_spotify
+    track = FactoryGirl.create(:track)
+    assert track.valid?
   end
 
   def test_it_belongs_to_a_radio
-    assert tracks(:one).radio == radios(:nova)
+    radio = FactoryGirl.create(:radio)
+    track = FactoryGirl.create(:track, radio: radio)
+    assert track.radio == radio
+  end
+
+  def test_it_update_radio_times
+    radio = FactoryGirl.create(:radio)
+    just_played_track = FactoryGirl.create(:track, radio: radio)
+    old_played_track  = FactoryGirl.create(:track, played_at: Time.now - 20.days,
+                                                   radio: radio)
+
+    assert just_played_track.played_at == radio.ended_at
+    assert old_played_track.played_at  == radio.started_at
   end
 end

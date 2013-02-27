@@ -1,5 +1,5 @@
 class Radio < ActiveRecord::Base
-  before_save :set_times
+  validate :ended_at_cannot_be_before_started_at
   has_many :tracks
 
   attr_accessible :ended_at, :started_at, :name, :tracks
@@ -7,10 +7,11 @@ class Radio < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_uniqueness_of :ended_at, :started_at, :scope => :name
 
-  # Calculate Start and End on save callback
-  private
-    def set_times
-      self.started_at = self.tracks.last.played_at
-      self.ended_at   = self.tracks.first.played_at
-    end
+private
+  def ended_at_cannot_be_before_started_at
+    return unless ended_at && started_at
+     if ended_at < started_at
+       errors.add(:ended_at, "can't be before Started_at")
+     end
+  end
 end

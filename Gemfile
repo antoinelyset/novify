@@ -10,6 +10,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'spork'
   gem 'spork-testunit'
 end
