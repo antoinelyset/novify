@@ -1,16 +1,15 @@
 ## Top
 
  ✔ fix time issues @done (13-02-26 22:55)
+ ✔ JSON API @done (13-02-28 10:20)
 
 ## Bot
- ☐ JSON API
- ☐ find_or_create on track by spotify href ?
- ☐ user signin for language setting/daily nova (playlist by mail)
- ☐  COMMENNNNTS
- ☐ mailer
- ☐ Use new relic
+ ☐ improve specs (use factory traits...)
+ ☐ paginate with will_paginate
+ ## CSS
+ ☐ improve design
+ ☐ responsive
  ☐ set Queue for pulling datas
+ ☐ Use new relic
  ☐ pull ALL THE DATAS and create a populate
- ☐ do some awesome proto/css
  ☐ improve overall experience
- ☐ some specs

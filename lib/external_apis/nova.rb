@@ -9,7 +9,7 @@ module ExternalApis
       @timestamp = timestamp
     end
 
-    def self.fetch(timestamp = Time.now.to_i)
+    def self.fetch(timestamp = Time.current.to_i)
       instance = self.new(timestamp)
       instance.get_tracks
     end

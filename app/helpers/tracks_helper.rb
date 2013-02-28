@@ -15,8 +15,8 @@ module TracksHelper
   def track_player(track)
     return "" if track.href.nil?
     "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:#{track.href}\"" +
-            'width="640px"'                                                      +
-            'height="80px"'                                                      +
+            'width="300px"'                                                      +
+            'height="380px"'                                                     +
             'frameborder="0"'                                                    +
             'allowtransparency="true">'                                          +
     '</iframe>'

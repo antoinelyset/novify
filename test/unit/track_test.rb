@@ -3,6 +3,7 @@ require 'test_helper'
 class TrackTest < ActiveSupport::TestCase
   def test_the_validators
     empty_track =  Track.new
+
     assert !empty_track.valid?
     assert empty_track.errors.count == 4
     [:played_at, :radio_name, :radio_artist, :radio].each do |att|
@@ -14,10 +15,12 @@ class TrackTest < ActiveSupport::TestCase
     track_without_spotify = FactoryGirl.create(:track,  spotify_artist: nil,
                                                         spotify_name: nil,
                                                         href: nil)
+
     assert track_without_spotify.valid?
   end
 
   def test_valid_track_with_spotify
+
     track = FactoryGirl.create(:track)
     assert track.valid?
   end
@@ -25,6 +28,7 @@ class TrackTest < ActiveSupport::TestCase
   def test_it_belongs_to_a_radio
     radio = FactoryGirl.create(:radio)
     track = FactoryGirl.create(:track, radio: radio)
+
     assert track.radio == radio
   end
 

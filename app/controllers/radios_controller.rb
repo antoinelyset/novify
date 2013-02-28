@@ -11,21 +11,16 @@ class RadiosController < ApplicationController
   end
 
   def create
-    timestamp     = calculate_timestamp(params)
+    timestamp = calculate_timestamp(params)
     @radio = Radio.new(name: "Nova : #{Time.at(timestamp)}")
-    @radio.tracks = request_tracks(timestamp)
-    @radio.tracks.each do |t|
-      t.radio = @radio
-      t.save
-    end
-    @radio.save
+    @radio.save_with_tracks(request_tracks(timestamp))
     redirect_to @radio
   end
 
 private
   def calculate_timestamp(params)
-    date = Time.parse(params[:date])
-    time = Time.parse(params[:time])
+    date = Time.zone.parse(params[:date])
+    time = Time.zone.parse(params[:time])
     Time.new(date.year, date.month, date.day, time.hour,
              time.min, time.sec, time.utc_offset).to_i
   end
