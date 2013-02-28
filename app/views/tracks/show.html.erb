@@ -1,0 +1,7 @@
+<div class="span9 offset2 track">
+  <% if !@track.href.blank? %>
+    <%= raw track_player(@track) %>
+  <% else %>
+    Track not found on Spotify.
+  <% end %>
+</div>

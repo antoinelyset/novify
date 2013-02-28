@@ -1,0 +1,1 @@
+json.(radio, :id, :name, :ended_at, :started_at)

@@ -8,7 +8,6 @@ class RadiosController < ApplicationController
 
   def show
     @radio = Radio.find(params[:id])
-    render :show
   end
 
   def create

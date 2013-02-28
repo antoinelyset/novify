@@ -3,7 +3,9 @@ Novify::Application.routes.draw do
   # first created -> highest priority.
   root :to => 'radios#index'
 
-  resources :radios
+  resources :radios, :only => [:index, :show, :create]
+
+  resources :tracks, :only => [:show]
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

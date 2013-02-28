@@ -1,12 +1,7 @@
 <div class="span9 offset2">
+  <h1 id="name"><%= @radio.name %></h1>
   <% if !@radio.tracks.blank? %>
       <%= raw tracks_player(@radio.tracks)%>
-
-      <ul class="tracks">
-        <% @radio.tracks.each do |track|%>
-          <li class="track"><%= raw track_player(track)%></li>
-        <% end %>
-      </ul>
   <% else %>
     Why U NO TRACKS ?
   <% end %>

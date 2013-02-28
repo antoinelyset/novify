@@ -10,20 +10,20 @@
         </tr>
       </thead>
       <tbody>
-        <% @radios.each do |playlist|%>
+        <% @radios.each do |radio|%>
           <tr>
-            <td><%= playlist.id %></td>
-            <td><%= link_to playlist.name , playlist %></td>
+            <td><%= radio.id %></td>
+            <td><%= link_to radio.name , radio %></td>
             <td>
-               <% if playlist.started_at %>
-                 <%= l playlist.started_at, format: :short %>
+               <% if radio.started_at %>
+                 <%= l radio.started_at, format: :short %>
                <% else %>
                  No Start Time
                <% end %>
              </td>
             <td>
-              <% if playlist.ended_at %>
-                <%= l playlist.ended_at, format: :short %>
+              <% if radio.ended_at %>
+                <%= l radio.ended_at, format: :short %>
               <% else %>
                 No End Time
               <% end %>
@@ -36,7 +36,7 @@
     Why U NO Playlist ?
   <% end %>
 
-  <%= form_for(Radio.new, :html => {:class => 'datepair'}) do %>
+  <%= form_for(Radio.new, :html => {:class => 'datepair offset3'}) do %>
     <%= label_tag(:date, "Select a Date:") %>
     <%= text_field_tag(:date, nil, :class => "date start") %>
     <%= label_tag(:time, "Select a Time:") %>
