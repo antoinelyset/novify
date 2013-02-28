@@ -2,14 +2,16 @@
 
  ✔ fix time issues @done (13-02-26 22:55)
  ✔ JSON API @done (13-02-28 10:20)
+ ✔ improve design @done (13-02-28 15:56)
+ ✔ implement memory store @done (13-02-28 17:12)
+ ☐ improve specs (use factory traits...)
 
 ## Bot
  ☐ Display the unfound tracks
- ☐ improve specs (use factory traits...)
  ☐ paginate with will_paginate
  ☐ spinner on search button
+
  ## CSS
- ☐ improve design
  ☐ responsive
 
  ##Ideas
