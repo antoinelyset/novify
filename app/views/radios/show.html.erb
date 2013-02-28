@@ -1,8 +1,8 @@
-<div class="span9 offset2">
-  <h1 id="name"><%= @radio.name %></h1>
+<div class="span8 offset2">
+  <h1 class="name"><%= @radio.name %></h1>
   <% if !@radio.tracks.blank? %>
       <%= raw tracks_player(@radio.tracks)%>
   <% else %>
-    Why U NO TRACKS ?
+    No Tracks Found, Spotify doesn't have all the tracks.
   <% end %>
 </div>

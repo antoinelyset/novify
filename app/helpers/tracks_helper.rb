@@ -5,7 +5,7 @@ module TracksHelper
     return "" if tracks_element.blank?
     player_height = 37*found_tracks.count+81
     "<iframe src=\"https://embed.spotify.com/?uri=spotify:trackset:#{title}:#{tracks_element}\"" +
-            'width="640px"'                                                                      +
+            'width="620px"'                                                                      +
             "height='#{player_height}px'"                                                        +
             'frameborder="0"'                                                                    +
             'allowtransparency="true">'                                                          +

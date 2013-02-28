@@ -1,9 +1,16 @@
-<div class="span12">
+<div class="span10 offset1">
+  <h3 class="intro">
+    Found <a href="http://www.novaplanet.com/">Nova Radio</a> tracks on Spotify
+  </h3>
+  <%= form_for(Radio.new, :html => {:class => 'form-inline datepair'}) do %>
+    <%= text_field_tag(:date, nil, :class => "date start", :placeholder => "Date") %>
+    <%= text_field_tag(:time, nil, :class => "time start", :placeholder => "Time") %>
+    <%= submit_tag("Search", :class => "btn search") %>
+  <% end %>
   <% if !@radios.blank? %>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>#</th>
           <th>Name</th>
           <th>Starting Time</th>
           <th>Ending Time</th>
@@ -12,7 +19,6 @@
       <tbody>
         <% @radios.each do |radio|%>
           <tr>
-            <td><%= radio.id %></td>
             <td><%= link_to radio.name , radio %></td>
             <td>
                <% if radio.started_at %>
@@ -33,14 +39,6 @@
       </tbody>
     </table>
   <% else %>
-    Why U NO Playlist ?
-  <% end %>
-
-  <%= form_for(Radio.new, :html => {:class => 'datepair offset3'}) do %>
-    <%= label_tag(:date, "Select a Date:") %>
-    <%= text_field_tag(:date, nil, :class => "date start") %>
-    <%= label_tag(:time, "Select a Time:") %>
-    <%= text_field_tag(:time, nil, :class => "time start") %>
-    <%= submit_tag("Search", :class => "btn") %>
+    No Playlist yet.
   <% end %>
 </div>

@@ -4,11 +4,15 @@
  ✔ JSON API @done (13-02-28 10:20)
 
 ## Bot
+ ☐ Display the unfound tracks
  ☐ improve specs (use factory traits...)
  ☐ paginate with will_paginate
+ ☐ spinner on search button
  ## CSS
  ☐ improve design
  ☐ responsive
+
+ ##Ideas
  ☐ set Queue for pulling datas
  ☐ Use new relic
  ☐ pull ALL THE DATAS and create a populate
