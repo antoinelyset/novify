@@ -12,13 +12,8 @@ class Track < ActiveRecord::Base
 
 private
   def update_radio_times
-    if radio.started_at && radio.ended_at
-      radio.started_at = played_at if played_at < radio.started_at
-      radio.ended_at   = played_at if played_at > radio.ended_at
-    else
-      radio.started_at = played_at
-      radio.ended_at   = played_at
-    end
+    radio.started_at = played_at if radio.started_at.nil? || played_at < radio.started_at
+    radio.ended_at   = played_at if radio.ended_at.nil?   || played_at > radio.ended_at
     radio.save!
   end
 end
