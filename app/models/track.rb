@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  after_save :update_radio_times
+  after_save :update_radio_started_at, :update_radio_ended_at
 
   belongs_to :radio
 
@@ -11,9 +11,17 @@ class Track < ActiveRecord::Base
   validates_presence_of  :played_at, :radio_name, :radio_artist, :radio
 
 private
-  def update_radio_times
-    radio.started_at = played_at if radio.started_at.nil? || played_at < radio.started_at
-    radio.ended_at   = played_at if radio.ended_at.nil?   || played_at > radio.ended_at
-    radio.save!
+  def update_radio_started_at
+    if radio.started_at.nil? || played_at < radio.started_at
+      radio.started_at = played_at
+      radio.save!
+    end
+  end
+
+  def update_radio_ended_at
+    if radio.ended_at.nil?   || played_at > radio.ended_at
+      radio.ended_at = played_at
+      radio.save!
+    end
   end
 end
