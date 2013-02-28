@@ -58,7 +58,7 @@ module ExternalApis
     end
 
     def played_at(html_track)
-      Time.at(html_track.parent.parent['class'][/timestamp_(\d+)/,1].to_i)
+      Time.zone.at(html_track.parent.parent['class'][/timestamp_(\d+)/,1].to_i)
     end
   end
 end

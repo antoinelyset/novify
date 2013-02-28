@@ -12,7 +12,7 @@ class RadiosController < ApplicationController
 
   def create
     timestamp = calculate_timestamp(params)
-    @radio = Radio.new(name: "Nova : #{Time.at(timestamp)}")
+    @radio = Radio.new(name: "Nova : #{l(Time.at(timestamp), format: :long)}")
     @radio.save_with_tracks(request_tracks(timestamp))
     redirect_to @radio
   end
