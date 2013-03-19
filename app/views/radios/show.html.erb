@@ -1,5 +1,7 @@
 <div class="span8 offset2">
-  <h1 class="name"><%= @radio.name %></h1>
+  <h1 class="name">
+    <%= @radio.name %>
+  </h1>
   <% if !@radio.tracks.blank? %>
       <%= raw tracks_player(@radio.tracks)%>
   <% else %>

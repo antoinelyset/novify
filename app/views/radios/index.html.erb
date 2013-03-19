@@ -1,14 +1,26 @@
 <div class="span10 offset1">
+
   <h3 class="intro">
-    Found <a href="http://www.novaplanet.com/">Nova Radio</a> tracks on Spotify
+    Found
+    <a href="http://www.novaplanet.com/">
+      Nova Radio
+    </a>
+    tracks on
+    <a href="http://www.spotify.com/">
+      Spotify
+    </a>
   </h3>
+
   <%= form_for(Radio.new, :html => {:class => 'form-inline datepair'}) do %>
     <%= text_field_tag(:date, nil, :class => "date start", :placeholder => "Date") %>
     <%= text_field_tag(:time, nil, :class => "time start", :placeholder => "Time") %>
     <%= submit_tag("Search", :class => "btn search") %>
   <% end %>
+
   <% if !@radios.blank? %>
+
     <table class="table table-striped">
+
       <thead>
         <tr>
           <th>Name</th>
@@ -16,6 +28,7 @@
           <th>Ending Time</th>
         </tr>
       </thead>
+
       <tbody>
         <% @radios.each do |radio|%>
           <tr>
@@ -37,7 +50,9 @@
           </tr>
         <% end %>
       </tbody>
+
     </table>
+
   <% else %>
     No Playlist yet.
   <% end %>
