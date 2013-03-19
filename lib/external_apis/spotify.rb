@@ -3,7 +3,7 @@ module ExternalApis
 
     def self.multiple_fetch(tracks)
       threads = []
-      threads = tracks.map { |t| threaded_fetch(t.radio_name, t.radio_artist) }.each(&:join)
+      threads = tracks.map { |t| threaded_fetch(t.formatted_name, t.formatted_artist) }.each(&:join)
       threads.each_with_index do |th, i|
         track = tracks[i]
         track.spotify_name, track.spotify_artist, track.href = th[:spotify_track].to_a
@@ -24,9 +24,20 @@ module ExternalApis
     end
 
     def self.get_track(name, artist)
-      search       = "#{name} #{artist}"
-      spotify_data = MetaSpotify::Track.search(search)[:tracks].first
+      try_count = 0
+      search    = "#{name} #{artist}"
+      begin
+        spotify_data = MetaSpotify::Track.search(search)[:tracks].first
+      rescue Exception => e
+        if is_a_502?(e) && ((try_count +=1) < 5)
+          retry
+        end
+      end
       Track.new(spotify_data)
+    end
+
+    def self.is_a_502?(exception)
+      exception.is_a?(MetaSpotify::ServerError) && exception.message == "502 - The API internally received a bad response"
     end
 
     class Track
