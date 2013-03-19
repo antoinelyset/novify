@@ -16,6 +16,13 @@
 
 @import "bootstrap";
 
+.logo {
+  color: #333;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .container {
   margin-top: 20px;
 }
