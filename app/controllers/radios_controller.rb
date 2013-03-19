@@ -3,7 +3,7 @@ require 'external_apis/spotify'
 
 class RadiosController < ApplicationController
   def index
-    @radios = Radio.all
+    @radios = Radio.order('started_at DESC').all
   end
 
   def show
@@ -12,8 +12,9 @@ class RadiosController < ApplicationController
 
   def create
     timestamp = calculate_timestamp(params)
-    @radio = Radio.new(name: "Nova : #{l(Time.at(timestamp), format: :long)}")
-    @radio.save_with_tracks(request_tracks(timestamp))
+    @radio = Radio.where(name: "Nova : #{l(Time.at(timestamp), format: :long)}").first_or_initialize
+    @radio.save_with_tracks(request_tracks(timestamp)) unless @radio.persisted?
+
     redirect_to @radio
   end
 
