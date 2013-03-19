@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130202212601) do
+ActiveRecord::Schema.define(:version => 20130319110555) do
 
   create_table "radios", :force => true do |t|
     t.string   "name"
@@ -25,14 +25,14 @@ ActiveRecord::Schema.define(:version => 20130202212601) do
     t.integer  "radio_id"
     t.datetime "played_at"
     t.string   "href"
-    t.string   "radio_name"
-    t.string   "radio_artist"
-    t.string   "spotify_name"
-    t.string   "spotify_artist"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "formatted_name"
-    t.string   "formatted_artist"
+    t.text     "radio_name",       :limit => 255
+    t.text     "radio_artist",     :limit => 255
+    t.text     "spotify_name",     :limit => 255
+    t.text     "spotify_artist",   :limit => 255
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.text     "formatted_name",   :limit => 255
+    t.text     "formatted_artist", :limit => 255
   end
 
 end
